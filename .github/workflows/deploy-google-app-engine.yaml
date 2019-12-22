@@ -1,0 +1,32 @@
+name: deploy
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '!*'
+
+jobs:
+  deploy:
+    name: Deploy to GAE
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: Create app.yaml
+        uses: ./.github/actions/envsubst
+        with:
+          input: ./app.yaml.tmpl
+          output: ./app.yaml
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+
+      - name: Deploy
+        uses: ./.github/actions/deploy-gae
+        with:
+          credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
+          project_id: ${{ secrets.GOOGLE_PROJECT_ID }}

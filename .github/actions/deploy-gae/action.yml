@@ -1,0 +1,13 @@
+name: Deploy Google App Engine
+author: nownabe
+description: Deploy Google App Engine
+inputs:
+  credentials:
+    description: JSON key
+    required: true
+  project_id:
+    description: GCP Project ID
+    required: true
+runs:
+  using: docker
+  image: Dockerfile

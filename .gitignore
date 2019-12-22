@@ -16,3 +16,4 @@
 tmp/
 .envrc.credentials
 discord-vc-notifier
+app.yaml
