@@ -27,3 +27,21 @@ Deploy manually:
 * Create `app.yaml`
   * envsubst < app.yaml.tmpl > app.yaml
 * `gcloud app deploy`
+
+Deploy by GitHub Actions:
+
+* GCP preparations:
+  * Create a service account who has following roles:
+    * App Engine Deployer
+    * App Engine Service Admin
+    * Cloud Build Editor
+    * Storage Admin
+  * Create JSON key of the service account
+  * Enable App Engine Admin API
+* Fork this repository
+* Set required secrets
+  * `GOOGLE_CREDENTIALS`: JSON key
+  * `GOOGLE_PROJECT_ID`: GCP project ID
+  * `DISCORD_BOT_TOKEN`
+* Set optional secrets
+  * `DISCORD_CHANNEL_ID`: if notify discord channel
