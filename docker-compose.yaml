@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./dev/Dockerfile
+    command: ["air"]
+    environment:
+      PORT: "8080"
+    ports:
+      - 8080:8080
+      - 5002:5002
+    volumes:
+      - type: bind
+        source: .
+        target: /go${APP_PATH}
+    working_dir: /go${APP_PATH}
