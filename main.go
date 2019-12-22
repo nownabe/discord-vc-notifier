@@ -25,9 +25,9 @@ func (n *discordNotifier) notify(msg string) {
 }
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	cfg, err := newConfig()
+	if err != nil {
+		log.Fatalf("failed to get config: %v", err)
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -51,8 +51,8 @@ func main() {
 	defer discord.Close()
 
 	log.Printf("Opened discord")
-	log.Printf("Listening on port %s", port)
-	if err := http.ListenAndServe(":"+port, nil); err != nil {
+	log.Printf("Listening on port %s", cfg.Port)
+	if err := http.ListenAndServe(":"+cfg.Port, nil); err != nil {
 		log.Fatal(err)
 	}
 	log.Printf("Terminating...")
