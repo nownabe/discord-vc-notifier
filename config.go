@@ -3,7 +3,8 @@ package main
 import "github.com/kelseyhightower/envconfig"
 
 type config struct {
-	Port string `default:"8080"`
+	DiscordChannelID string `split_words:"true"`
+	Port             string `default:"8080"`
 }
 
 func newConfig() (*config, error) {

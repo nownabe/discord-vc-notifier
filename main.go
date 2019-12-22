@@ -15,17 +15,21 @@ func main() {
 		log.Fatalf("failed to get config: %v", err)
 	}
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "ok")
-	})
+	// Discord Bot
 
 	discord, err := discordgo.New("Bot " + os.Getenv("DISCORD_BOT_TOKEN"))
 	if err != nil {
 		log.Fatalf("failed to build discord: %v", err)
 	}
 
-	notifiers := []notifier{
-		&discordNotifier{channelID: "658184345382551563", session: discord},
+	notifiers := []notifier{}
+
+	if cfg.DiscordChannelID != "" {
+		notifiers = append(notifiers, &discordNotifier{
+			channelID: cfg.DiscordChannelID,
+			session:   discord,
+		})
+		log.Printf("added a discord notifier (%s)", cfg.DiscordChannelID)
 	}
 
 	discord.AddHandler(handler(notifiers))
@@ -36,6 +40,13 @@ func main() {
 	defer discord.Close()
 
 	log.Printf("Opened discord")
+
+	// HTTP Server
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "ok")
+	})
+
 	log.Printf("Listening on port %s", cfg.Port)
 	if err := http.ListenAndServe(":"+cfg.Port, nil); err != nil {
 		log.Fatal(err)
