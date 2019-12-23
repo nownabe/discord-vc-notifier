@@ -66,7 +66,14 @@ func handler(ns []notifier) func(*discordgo.Session, *discordgo.VoiceStateUpdate
 			return
 		}
 
-		msg := fmt.Sprintf("%sがボイチャにいるよ", m.Nick)
+		var name string
+		if m.Nick != "" {
+			name = m.Nick
+		} else {
+			name = m.User.Username
+		}
+
+		msg := fmt.Sprintf("%sがボイチャにいるよ", name)
 
 		for _, n := range ns {
 			n.notify(msg)
