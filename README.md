@@ -1,6 +1,8 @@
 discord-vc-notifier
 ===================
 
+[![License](https://img.shields.io/github/license/nownabe/discord-vc-notifier.svg?style=popout)](https://github.com/nownabe/discord-vc-notifier/blob/master/LICENSE.txt)
+
 # Prepare
 
 * [Create new application](https://discordapp.com/developers/applications/)
