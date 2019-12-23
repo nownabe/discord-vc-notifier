@@ -2,6 +2,7 @@ discord-vc-notifier
 ===================
 
 [![License](https://img.shields.io/github/license/nownabe/discord-vc-notifier.svg?style=popout)](https://github.com/nownabe/discord-vc-notifier/blob/master/LICENSE.txt)
+[![Go Report Card](https://goreportcard.com/badge/github.com/nownabe/discord-vc-notifier)](https://goreportcard.com/report/github.com/nownabe/discord-vc-notifier)
 
 # Prepare
 
