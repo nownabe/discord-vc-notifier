@@ -32,6 +32,13 @@ func main() {
 		log.Printf("added a discord notifier (%s)", cfg.DiscordChannelID)
 	}
 
+	if cfg.SlackWebhookURL != "" {
+		sn := newSlackNotifier(cfg.SlackWebhookURL, cfg.SlackChannel,
+			cfg.SlackUsername, cfg.SlackIconEmoji)
+		notifiers = append(notifiers, sn)
+		log.Printf("added a slack notifier")
+	}
+
 	discord.AddHandler(handler(notifiers))
 
 	if err := discord.Open(); err != nil {

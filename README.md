@@ -47,5 +47,11 @@ Deploy by GitHub Actions:
   * `GOOGLE_CREDENTIALS`: JSON key
   * `GOOGLE_PROJECT_ID`: GCP project ID
   * `DISCORD_BOT_TOKEN`
-* Set optional secrets
-  * `DISCORD_CHANNEL_ID`: if notify discord channel
+* Set secrets for notification options
+  * If you want to send notifications to discord channel:
+    * `DISCORD_CHANNEL_ID` (required)
+  * If you want to send notifications to slack channel:
+    * `SLACK_WEBHOOK_URL` (required)
+    * `SLACK_CHANNEL`
+    * `SLACK_ICON_EMOJI`
+    * `SLACK_USERNAME`
