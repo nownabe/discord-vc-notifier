@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 1
 
       - name: Create app.yaml
-        uses: nowactions/envsubst@master
+        uses: nowactions/envsubst@v1
         with:
           input: ./app.yaml.tmpl
           output: ./app.yaml
