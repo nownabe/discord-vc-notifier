@@ -13,8 +13,8 @@ import (
 )
 
 func main() {
-	stopMonitor := monitorMemStats()
-	defer stopMonitor()
+	//stopMonitor := monitorMemStats()
+	//defer stopMonitor()
 
 	cfg, err := newConfig()
 	if err != nil {
