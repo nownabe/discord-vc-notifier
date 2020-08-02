@@ -1,15 +1,21 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"runtime"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 )
 
 func main() {
+	stopMonitor := monitorMemStats()
+	defer stopMonitor()
+
 	cfg, err := newConfig()
 	if err != nil {
 		log.Fatalf("failed to get config: %v", err)
@@ -85,5 +91,35 @@ func handler(ns []notifier) func(*discordgo.Session, *discordgo.VoiceStateUpdate
 		for _, n := range ns {
 			n.notify(msg)
 		}
+	}
+}
+
+func monitorMemStats() func() {
+	s := new(runtime.MemStats)
+	t := time.NewTicker(time.Minute)
+	done := make(chan struct{})
+
+	go func() {
+		for {
+			select {
+			case <-done:
+				return
+			case <-t.C:
+				runtime.ReadMemStats(s)
+				json, err := json.Marshal(s)
+				if err == nil {
+					log.Printf("%s", json)
+				} else {
+					log.Printf("Failed to marshal mem stats: %v", err)
+				}
+			}
+		}
+	}()
+
+	log.Printf("started monitoring mem stats")
+
+	return func() {
+		t.Stop()
+		done <- struct{}{}
 	}
 }
